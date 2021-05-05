@@ -7,7 +7,7 @@ view: derived {
         column: looker {}
         column: reg_key {}
       }
-      persist_for: "10 mins"
+      datagroup_trigger:orders_datagroup
     }
     dimension: created_at {
       type: number
