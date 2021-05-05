@@ -4,7 +4,7 @@
 
 view: test_derived_table {
   derived_table: {
-    # persist_for: "10 minutes"
+    persist_for: "20 minutes"
     explore_source: service_requests_opensource {
       column: complaint_type {
         field: service_requests_opensource.complaint_type
