@@ -7,7 +7,7 @@ view: derived {
         column: looker {}
         column: reg_key {}
       }
-      datagroup_trigger:orders_datagroup
+      datagroup_trigger:akash_test_datagroup
     }
     dimension: created_at {
       type: number

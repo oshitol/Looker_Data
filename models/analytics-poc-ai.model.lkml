@@ -64,7 +64,7 @@ explore: stackoverflow_posts {
     type: left_outer
     relationship: one_to_many
     # required_joins: [posts_answers]
-    sql_on: ${posts_questions.user_id} = ${posts_answers.owner_user_id};;
+    sql_on: ${posts_questions.user_id} = ${stackoverflow_posts.owner_user_id};;
   }
 
   # conditionally_filter: {
