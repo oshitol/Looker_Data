@@ -34,7 +34,9 @@ explore: service_requests_opensource {}
 
 explore: sample {}
 
-explore: games_post_wide_opensource {}
+explore: games_post_wide_opensource {
+  extends: [sample]
+}
 
 explore: bikeshare_stations_opensource {}
 
