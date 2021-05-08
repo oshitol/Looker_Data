@@ -1,4 +1,5 @@
 view: posts_answers {
+  # view_label: "desired label name"
   sql_table_name: `poc-analytics-ai.stackoverflow.posts_answers`
     ;;
   drill_fields: [id]
@@ -12,17 +13,20 @@ view: posts_answers {
   dimension: accepted_answer_id {
     # primary_key: yes
     type: string
+    view_label: "desired label name"
     sql: ${TABLE}.accepted_answer_id ;;
+    # hidden: yes
   }
 
   dimension: answer_count {
     type: string
+    view_label: "desired label name"
     sql: ${TABLE}.answer_count ;;
   }
 
   dimension: body {
-    # type: string
-    type: yesno
+    type: string
+    # type: yesno
     # sql: ${TABLE}.body = "California" OR ${TABLE}.body = "New York" ;;
     sql: ${TABLE}.body ;;
   }
@@ -32,8 +36,14 @@ view: posts_answers {
     sql: ${TABLE}.comment_count ;;
   }
 
+  # dimension: test {
+  #   type: string
+  #   sql: ${post_questions.body} ;;
+  # }
+
   dimension_group: community_owned {
     type: time
+    label: "Test"
     timeframes: [
       raw,
       time,
@@ -58,6 +68,20 @@ view: posts_answers {
       year
     ]
     sql: ${TABLE}.creation_date ;;
+  }
+
+
+  dimension_group: time_diff {
+    type: duration
+    intervals: [
+      hour,
+      day,
+      week
+    ]
+    drill_fields: [body]
+    alias: [time_diff]
+    sql_start: ${creation_raw} ;;
+    sql_end:  ${community_owned_raw};;
   }
 
   dimension: created_week {
@@ -99,12 +123,12 @@ view: posts_answers {
   }
 
 
-  dimension_group: time_diff {
-    type: duration
-    intervals: [day, hour]
-    sql_start: ${creation_raw} ;;
-    sql_end: ${last_activity_raw};;
-  }
+  # dimension_group: time_diff {
+  #   type: duration
+  #   intervals: [day, hour]
+  #   sql_start: ${creation_raw} ;;
+  #   sql_end: ${last_activity_raw};;
+  # }
 
 
   dimension_group: last_edit {
