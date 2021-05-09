@@ -13,14 +13,12 @@ view: posts_answers {
   dimension: accepted_answer_id {
     # primary_key: yes
     type: string
-    view_label: "desired label name"
     sql: ${TABLE}.accepted_answer_id ;;
     # hidden: yes
   }
 
   dimension: answer_count {
     type: string
-    view_label: "desired label name"
     sql: ${TABLE}.answer_count ;;
   }
 

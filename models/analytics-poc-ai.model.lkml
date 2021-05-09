@@ -54,6 +54,7 @@ explore: posts_questions {
 
 explore: stackoverflow_posts {
   join: posts_answers {
+    fields: [posts_answers.accepted_answer_id]
     # outer_only: yes
     type: left_outer
     relationship: one_to_many
@@ -63,6 +64,7 @@ explore: stackoverflow_posts {
 
   join: posts_questions {
     type: left_outer
+    fields: [posts_questions.body]
     relationship: one_to_many
     # required_joins: [posts_answers]
     sql_on: ${posts_questions.user_id} = ${stackoverflow_posts.owner_user_id};;
