@@ -85,15 +85,23 @@ explore: stackoverflow_posts {
 }
 
 
+# explore: stackoverflow_posts {
+#   join: posts_answers {
+#     type: left_outer
+#     relationship: one_to_many
+
+#   }
+# }
+
 
 # explore: stackoverflow_posts {
 #   join: posts_answers {
 #     type: left_outer
-#     # sql_table_name:posts_questions;;
-#     # outer_only: yes
 #     relationship: one_to_many
-#     sql_on: ${stackoverflow_posts.owner_user_id} = ${posts_answers.owner_user_id};;
-#     # foreign_key: owner_user_id
+#     sql_table_name:posts_questions;;
+#     # outer_only: yes
+#     #sql_on: ${stackoverflow_posts.owner_user_id} = ${posts_answers.owner_user_id};;
+#     foreign_key: owner_user_id
 #     #view_label: "desired label for the view"
 #     # fields: [answer_count]
 #   }
@@ -166,6 +174,10 @@ explore: posts_tag_wiki_excerpt {
   # label: "StackOverFlow Post Tag WIKI EXCERPT"
 }
 explore: posts_wiki_placeholder{
+  conditionally_filter: {
+    filters: [accepted_answer_id: "akash"]
+    unless: [body,community_owned_date,favorite_count]
+  }
   label: "StackOverFlow Post Tag WIKI PLACEHOLDER"
 }
 access_grant: can_view_body {

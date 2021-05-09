@@ -33,6 +33,10 @@ view: posts_wiki_placeholder {
     type: string
     sql: ${TABLE}.community_owned_date ;;
   }
+  # dimension: date_test {
+  #   type:
+  #   sql: ${TABLE}.creation_date ;;
+  # }
 
   dimension_group: creation {
     type: time
@@ -129,6 +133,12 @@ view: posts_wiki_placeholder {
   dimension: view_count {
     type: string
     sql: ${TABLE}.view_count ;;
+  }
+
+  measure: test_count {
+    type: count
+    filters: [posts_wiki_placeholder.body: "France"]
+    drill_fields: [id, owner_display_name, last_editor_display_name]
   }
 
   measure: count {
