@@ -57,6 +57,7 @@ view: sql_runner_derived_query {
 
   dimension: column3 {
     type: string
+    alias: [test]
     sql: ${TABLE}.column3 ;;
   }
 
