@@ -31,6 +31,7 @@ explore: service_requests_opensource {}
 #     sql_on: ${service_requests_opensource.longitude} = ${bikeshare_stations_opensource.longitude};;
 #   }
 # }
+# explore: posts_tag_wiki {}
 
 explore: sample {}
 
@@ -54,7 +55,7 @@ explore: posts_questions {
 
 explore: stackoverflow_posts {
   join: posts_answers {
-    fields: [posts_answers.accepted_answer_id]
+    # fields: [posts_answers.accepted_answer_id]
     # outer_only: yes
     type: left_outer
     relationship: one_to_many
@@ -64,20 +65,26 @@ explore: stackoverflow_posts {
 
   join: posts_questions {
     type: left_outer
-    fields: [posts_questions.body]
+    # fields: [posts_questions.body]
     relationship: one_to_many
-    # required_joins: [posts_answers]
+    required_joins: [posts_answers]
+    sql_where: ${posts_answers.body} < 'akash' ;;
     sql_on: ${posts_questions.user_id} = ${stackoverflow_posts.owner_user_id};;
+
   }
 
   # conditionally_filter: {
   #   filters: [id: "1"]
-  #   unless: [owner_user_id,body,comment_count,parent_id,id]
+  #   unless: [posts_questions.accepted_answer_id,body,comment_count,parent_id,id]
   # }
+
+
+
   always_filter: {
-    filters: [id: "123"]
+    # filters: [id: "123"]
   }
-  # sql_always_where: ${owner_user_id} >= '1' ;;
+
+  # sql_always_where: ${owner_user_id} >= 1;;
 
   # access_filter: {
   #   field: body
@@ -164,16 +171,16 @@ explore: stackoverflow_posts {
 
 explore: posts_tag_wiki_excerpt {
 
-  # access_filter: {
-  #   field: posts_tag_wiki_excerpt.body
-  #   user_attribute: akash_test_attribute
-  # }
+  access_filter: {
+    field: posts_tag_wiki_excerpt.body
+    user_attribute: akash_test_attribute
+  }
   # access_filter: {
   #   field: posts_tag_wiki_excerpt.accepted_answer_id
   #   user_attribute: akash_test_attribute
   # }
-  required_access_grants: [can_view_body]
-  # label: "StackOverFlow Post Tag WIKI EXCERPT"
+  # required_access_grants: [can_view_body]
+  label: "StackOverFlow Post Tag WIKI EXCERPT"
 }
 explore: posts_wiki_placeholder{
   conditionally_filter: {

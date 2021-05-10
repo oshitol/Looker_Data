@@ -14,6 +14,11 @@ view: posts_tag_wiki {
     sql: ${TABLE}.accepted_answer_id ;;
   }
 
+  # dimension: new_dim {
+  #   type: string
+  #   sql: ${post_answers.body} ;;
+  # }
+
   dimension: answer_count {
     type: string
     sql: ${TABLE}.answer_count ;;

@@ -2,6 +2,7 @@ view: sql_runner_derived_query {
   derived_table: {
     sql: select * from `poc-analytics-ai.looker_learning.bikeshare_stations_opensource`
       ;;
+      datagroup_trigger: akash_test_datagroup
   }
 
   measure: count {
