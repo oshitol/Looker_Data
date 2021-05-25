@@ -9,12 +9,17 @@ datagroup: akash_test_datagroup {
   max_cache_age: "100 minutes"
 }
 
+
+
 datagroup: analytics {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
   max_cache_age: "1 hour"
 }
 
 # persist_with: analytics-poc-ai_default_datagroup
+
+
+# explore: test_dview {}
 
 explore: connection_reg_r3 {
   # persist_with: analytics
@@ -171,15 +176,15 @@ explore: stackoverflow_posts {
 
 explore: posts_tag_wiki_excerpt {
 
-  access_filter: {
-    field: posts_tag_wiki_excerpt.body
-    user_attribute: akash_test_attribute
-  }
+  # access_filter: {
+  #   field: posts_tag_wiki_excerpt.body
+  #   user_attribute: akash_test_attribute
+  # }
   # access_filter: {
   #   field: posts_tag_wiki_excerpt.accepted_answer_id
   #   user_attribute: akash_test_attribute
   # }
-  # required_access_grants: [can_view_body]
+  required_access_grants: [can_view_body]
   label: "StackOverFlow Post Tag WIKI EXCERPT"
 }
 explore: posts_wiki_placeholder{

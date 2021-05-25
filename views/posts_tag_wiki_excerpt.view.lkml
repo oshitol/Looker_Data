@@ -23,6 +23,7 @@ view: posts_tag_wiki_excerpt {
   dimension: body {
     type: string
     sql: ${TABLE}.body ;;
+    required_access_grants: [can_view_body]
   }
 
   dimension: comment_count {
