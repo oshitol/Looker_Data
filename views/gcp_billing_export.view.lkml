@@ -58,7 +58,7 @@ view: gcp_billing_export {
   measure: total_cost {
     description: "The total cost associated to the SKU, between the Start Date and End Date"
     type: sum
-    sql: ${TABLE}.cost ;;
+    sql: ${TABLE}.cost;;
     value_format_name: decimal_2
     html: {% if currency._value == 'GBP' %}
             <a href="{{ link }}"> £{{ rendered_value }}</a>
@@ -103,6 +103,7 @@ view: gcp_billing_export {
   dimension: currency_conversion_rate {
     type: number
     sql: ${TABLE}.currency_conversion_rate ;;
+    value_format_name: decimal_2
   }
 
   dimension_group: export {
@@ -295,6 +296,7 @@ view: gcp_billing_export_project {
     label: "Project Name"
     type: string
     sql: ${TABLE}.name;;
+    full_suggestions: yes
     drill_fields: [gcp_billing_export_service.description, gcp_billing_export.sku_category, gcp_billing_export_sku.description]
   }
 }
@@ -330,6 +332,7 @@ view: gcp_billing_export_service {
     label: "Service"
     type: string
     sql: ${TABLE}.description ;;
+    full_suggestions: yes
     drill_fields: [gcp_billing_export_project.name, gcp_billing_export.sku_category, gcp_billing_export_sku.description]
   }
 }
