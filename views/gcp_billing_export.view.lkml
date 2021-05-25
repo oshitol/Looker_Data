@@ -72,6 +72,14 @@ view: gcp_billing_export {
     drill_fields: [gcp_billing_export_project.name, gcp_billing_export_service.description, sku_category, gcp_billing_export_sku.description, gcp_billing_export_usage.unit, gcp_billing_export_usage.total_usage, total_cost]
   }
 
+  measure: total_cost_usd {
+    type: sum_distinct
+    sql: ${TABLE}.cost/ ${currency_conversion_rate}  ;;
+    value_format:"$#.00;($#.00)"
+  }
+
+
+
   dimension: credits {
     hidden: yes
     sql: ${TABLE}.credits ;;
