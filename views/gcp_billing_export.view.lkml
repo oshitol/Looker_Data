@@ -111,7 +111,6 @@ view: gcp_billing_export {
   dimension: currency_conversion_rate {
     type: number
     sql: ${TABLE}.currency_conversion_rate ;;
-    value_format_name: decimal_2
   }
 
   dimension_group: export {
