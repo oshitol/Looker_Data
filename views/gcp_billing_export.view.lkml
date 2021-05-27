@@ -303,7 +303,7 @@ view: gcp_billing_export_project {
   dimension: name {
     label: "Project Name"
     type: string
-    sql: ${TABLE}.name;;
+    sql: lower(${TABLE}.name);;
     full_suggestions: yes
     drill_fields: [gcp_billing_export_service.description, gcp_billing_export.sku_category, gcp_billing_export_sku.description]
   }
