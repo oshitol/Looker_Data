@@ -58,7 +58,7 @@ view: gcp_billing_export {
   measure: total_cost {
     description: "The total cost associated to the SKU, between the Start Date and End Date"
     type: sum
-    sql: ${TABLE}.cost;;
+    sql: ${TABLE}.cost ;;
     value_format_name: decimal_2
     html: {% if currency._value == 'GBP' %}
             <a href="{{ link }}"> £{{ rendered_value }}</a>
@@ -66,11 +66,12 @@ view: gcp_billing_export {
             <a href="{{ link }}"> ${{ rendered_value }}</a>
           {% elsif currency == 'EUR' %}
             <a href="{{ link }}"> €{{ rendered_value }}</a>
-          {% else %}
-            <a href="{{ link }}"> {{ rendered_value }} {{ currency._value }}</a>
+          {% else currency == 'INR' %}
+            <a href="{{ link }}"> ₹{{ rendered_value }}</a>
           {% endif %} ;;
     drill_fields: [gcp_billing_export_project.name, gcp_billing_export_service.description, sku_category, gcp_billing_export_sku.description, gcp_billing_export_usage.unit, gcp_billing_export_usage.total_usage, total_cost]
   }
+
 
   measure: total_cost_usd {
     type: sum_distinct
@@ -96,8 +97,8 @@ view: gcp_billing_export {
             <a href="{{ link }}"> ${{ rendered_value }}</a>
           {% elsif currency == 'EUR' %}
             <a href="{{ link }}"> €{{ rendered_value }}</a>
-          {% else %}
-            <a href="{{ link }}"> {{ rendered_value }} {{ currency._value }}</a>
+          {% else currency == 'INR' %}
+            <a href="{{ link }}"> ₹{{ rendered_value }}</a>
           {% endif %} ;;
     drill_fields: [gcp_billing_export_credits.credit_name,gcp_billing_export_credits.credit_amount]
   }
