@@ -204,7 +204,6 @@ view: posts_answers {
   measure: count {
     type: count
     drill_fields: [id, owner_display_name, last_editor_display_name,title]
-    filters: [title: ">=18 AND <=25"]
   }
 
   measure: title_list {

@@ -16,10 +16,19 @@ datagroup: analytics {
   max_cache_age: "1 hour"
 }
 
-# persist_with: analytics-poc-ai_default_datagroup
-
-
-# explore: test_dview {}
+test: order_id_is_unique {
+  explore_source: posts_answers {
+    column: id {
+    }
+    column: count {}
+    sorts: [posts_answers.count: desc]
+    # limit: 1
+  }
+  assert: order_id_is_unique {
+    # expression: NOT is_null(${posts_answers.id}) ;;
+    expression: ${posts_answers.count} = 1 ;;
+  }
+}
 
 explore: connection_reg_r3 {
   # persist_with: analytics
