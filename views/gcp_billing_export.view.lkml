@@ -62,11 +62,11 @@ view: gcp_billing_export {
     value_format_name: decimal_2
     html: {% if currency._value == 'GBP' %}
             <a href="{{ link }}"> £{{ rendered_value }}</a>
-          {% elsif currency == 'USD' %}
+          {% elsif currency._value == 'USD' %}
             <a href="{{ link }}"> ${{ rendered_value }}</a>
-          {% elsif currency == 'EUR' %}
+          {% elsif currency._value == 'EUR' %}
             <a href="{{ link }}"> €{{ rendered_value }}</a>
-          {% else currency == 'INR' %}
+          {% else currency._value == 'INR' %}
             <a href="{{ link }}"> ₹{{ rendered_value }}</a>
           {% endif %} ;;
     drill_fields: [gcp_billing_export_project.name, gcp_billing_export_service.description, sku_category, gcp_billing_export_sku.description, gcp_billing_export_usage.unit, gcp_billing_export_usage.total_usage, total_cost]
@@ -78,8 +78,6 @@ view: gcp_billing_export {
     sql: ${TABLE}.cost/ ${currency_conversion_rate}  ;;
     value_format:"$#.00;($#.00)"
   }
-
-
 
   dimension: credits {
     hidden: yes
@@ -93,11 +91,11 @@ view: gcp_billing_export {
     value_format_name: decimal_2
     html: {% if currency._value == 'GBP' %}
             <a href="{{ link }}"> £{{ rendered_value }}</a>
-          {% elsif currency == 'USD' %}
+          {% elsif currency._value == 'USD' %}
             <a href="{{ link }}"> ${{ rendered_value }}</a>
-          {% elsif currency == 'EUR' %}
+          {% elsif currency._value == 'EUR' %}
             <a href="{{ link }}"> €{{ rendered_value }}</a>
-          {% else currency == 'INR' %}
+          {% else currency._value == 'INR' %}
             <a href="{{ link }}"> ₹{{ rendered_value }}</a>
           {% endif %} ;;
     drill_fields: [gcp_billing_export_credits.credit_name,gcp_billing_export_credits.credit_amount]
