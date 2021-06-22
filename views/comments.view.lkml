@@ -9,6 +9,19 @@ view: comments {
     sql: ${TABLE}.id ;;
   }
 
+  parameter: metric_selection {
+    type: string
+    allowed_value: {
+      label: "Sold Count"
+      value: "sold_count"
+    }
+    allowed_value: {
+      label: "Sold Percent"
+      value: "sold_percent"
+    }
+
+  }
+
   dimension_group: creation {
     type: time
     timeframes: [

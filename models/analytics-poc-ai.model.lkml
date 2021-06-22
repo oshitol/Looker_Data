@@ -5,30 +5,29 @@ include: "/views/**/*.view"
 
 
 datagroup: akash_test_datagroup {
-  sql_trigger: SELECT max(id) FROM `poc-analytics-ai.looker_learning.pdt_sql_trigger_check`;;
+  #sql_trigger: SELECT max(id) FROM `poc-analytics-ai.looker_learning.pdt_sql_trigger_check`;;
   max_cache_age: "100 minutes"
 }
 
 
+# datagroup: analytics {
+#   # sql_trigger: SELECT MAX(id) FROM etl_log;;
+#   max_cache_age: "1 hour"
+# }
 
-datagroup: analytics {
-  # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
-}
-
-test: order_id_is_unique {
-  explore_source: posts_answers {
-    column: id {
-    }
-    column: count {}
-    sorts: [posts_answers.count: desc]
-    # limit: 1
-  }
-  assert: order_id_is_unique {
-    # expression: NOT is_null(${posts_answers.id}) ;;
-    expression: ${posts_answers.count} = 1 ;;
-  }
-}
+# test: order_id_is_unique {
+#   explore_source: posts_answers {
+#     column: id {
+#     }
+#     column: count {}
+#     sorts: [posts_answers.count: desc]
+#     # limit: 1
+#   }
+#   assert: order_id_is_unique {
+#     # expression: NOT is_null(${posts_answers.id}) ;;
+#     expression: ${posts_answers.count} = 1 ;;
+#   }
+# }
 
 explore: connection_reg_r3 {
   # persist_with: analytics

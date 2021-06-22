@@ -1,3 +1,17 @@
+test: order_id_is_unique {
+  explore_source: posts_answers {
+    column: id {
+    }
+    column: count {}
+    sorts: [posts_answers.count: desc]
+    # limit: 1
+  }
+  assert: order_id_is_unique {
+    # expression: NOT is_null(${posts_answers.id}) ;;
+    expression: ${posts_answers.count} = 1 ;;
+  }
+}
+
 view: posts_answers {
   # view_label: "desired label name"
   sql_table_name: `poc-analytics-ai.stackoverflow.posts_answers`
@@ -121,12 +135,12 @@ view: posts_answers {
   }
 
 
-  # dimension_group: time_diff {
-  #   type: duration
-  #   intervals: [day, hour]
-  #   sql_start: ${creation_raw} ;;
-  #   sql_end: ${last_activity_raw};;
-  # }
+  dimension_group: time_diff3 {
+    type: duration
+    intervals: [day, hour]
+    sql_start: ${creation_raw} ;;
+    sql_end: ${last_activity_raw};;
+  }
 
 
   dimension_group: last_edit {
