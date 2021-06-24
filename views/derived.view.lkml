@@ -5,7 +5,6 @@ view: derived {
         column: created_at {}
         column: expires_at {}
         column: looker {}
-        column: reg_key {}
       }
       # datagroup_trigger:akash_test_datagroup
     }
