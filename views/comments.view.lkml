@@ -63,7 +63,7 @@ view: comments {
 
   measure: count {
     type: count
-    drill_fields: [text]
+    drill_fields: [user_display_name]
   }
 
 }
