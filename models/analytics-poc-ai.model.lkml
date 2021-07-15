@@ -186,6 +186,10 @@ explore: posts_tag_wiki_excerpt {
   # }
   required_access_grants: [can_view_body]
   label: "StackOverFlow Post Tag WIKI EXCERPT"
+  access_filter: {
+    field: title
+    user_attribute: title_user_attribute
+  }
 }
 explore: posts_wiki_placeholder{
   conditionally_filter: {
@@ -201,7 +205,7 @@ access_grant: can_view_body {
 
 access_grant: can_view_body_attribute {
   user_attribute: akash_test_attribute
-  allowed_values: ["allowe"]
+  allowed_values: ["allowed"]
 }
 
 access_grant: can_view_abap_title {
