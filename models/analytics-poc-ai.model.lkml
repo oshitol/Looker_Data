@@ -190,6 +190,13 @@ explore: posts_tag_wiki_excerpt {
     field: title
     user_attribute: title_user_attribute
   }
+  access_filter: {
+    field: owner_display_name
+    user_attribute:  order_name_user_attribute
+  }
+
+
+
 }
 explore: posts_wiki_placeholder{
   conditionally_filter: {
@@ -206,9 +213,4 @@ access_grant: can_view_body {
 access_grant: can_view_body_attribute {
   user_attribute: akash_test_attribute
   allowed_values: ["allowed"]
-}
-
-access_grant: can_view_abap_title {
-  user_attribute: title_user_attribute
-  allowed_values: ["ABAP"]
 }
