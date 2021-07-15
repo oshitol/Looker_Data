@@ -203,3 +203,8 @@ access_grant: can_view_body_attribute {
   user_attribute: akash_test_attribute
   allowed_values: ["allowe"]
 }
+
+access_grant: can_view_abap_title {
+  user_attribute: title_user_attribute
+  allowed_values: ["ABAP"]
+}
