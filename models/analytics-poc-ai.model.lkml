@@ -190,10 +190,7 @@ explore: posts_tag_wiki_excerpt {
     field: title
     user_attribute: title_user_attribute
   }
-  access_filter: {
-    field: owner_display_name
-    user_attribute: order_name_user_attribute
-  }
+
 
 
 
