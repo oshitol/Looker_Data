@@ -135,6 +135,7 @@ view: posts_tag_wiki_excerpt {
   dimension: title {
     type: string
     sql: ${TABLE}.title ;;
+
   }
 
   dimension: view_count {
