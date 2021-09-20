@@ -6,7 +6,7 @@ include: "/views/**/*.view"
 
 datagroup: akash_test_datagroup {
   sql_trigger: SELECT max(id1) FROM `poc-analytics-ai.looker_learning.pdt_sql_trigger_check`;;
-  max_cache_age: "100 minutes"
+  max_cache_age: "12 minutes"
 }
 
 
