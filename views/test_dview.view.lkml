@@ -1,6 +1,5 @@
 view: add_a_unique_name_1620820995 {
   derived_table: {
-    datagroup_trigger: test_dg
     explore_source: posts_answers {
       column: body {}
       column: creation_year {}
