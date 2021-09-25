@@ -2,13 +2,17 @@ connection: "analytics-poc-ai"
 
 # include all the views
 include: "/views/**/*.view"
+include: "/manifest.lkml"
 
 
 datagroup: akash_test_datagroup {
-  sql_trigger: SELECT max(id1) FROM `poc-analytics-ai.looker_learning.pdt_sql_trigger_check`;;
-  max_cache_age: "20 minutes"
+  # sql_trigger: SELECT max(id) FROM `poc-analytics-ai.looker_learning.pdt_sql_trigger_check`;;
+  max_cache_age: "5 minutes"
 }
 
+datagroup: test_dg {
+  max_cache_age: "5 minutes"
+}
 
 # datagroup: analytics {
 #   # sql_trigger: SELECT MAX(id) FROM etl_log;;
@@ -34,26 +38,38 @@ explore: connection_reg_r3 {
   # # persist_for: "2 hour"
 }
 
-explore: test_derived_table {}
+#explore: test_derived_table {}
 
-explore: service_requests_opensource {}
+#explore: service_requests_opensource {}
 
-# explore: service_requests_opensource {
-#   join: bikeshare_stations_opensource {
-#     type: left_outer
-#     sql_on: ${service_requests_opensource.longitude} = ${bikeshare_stations_opensource.longitude};;
-#   }
-# }
+explore: service_requests_opensource {
+  join: bikeshare_stations_opensource {
+    type: left_outer
+    sql_on: ${service_requests_opensource.longitude} = ${bikeshare_stations_opensource.longitude};;
+    fields: [bikeshare_stations_opensource.latitude]
+  }
+}
 # explore: posts_tag_wiki {}
+explore: sample{
+}
 
-explore: sample {}
-
-explore: games_post_wide_opensource {}
+explore: games_post_wide_opensource {
+  persist_with: test_dg
+  label: "GAMES"
+}
 
 explore: bikeshare_stations_opensource {}
 
 explore: comments {
   label: "StackOverFlow Comments"
+  # sql_always_where: ${score}>=1547;;
+  # always_filter: {
+  #   filters: [text: ""]
+  # }
+  # conditionally_filter: {
+  #   filters: [comments.score: ">=1547"]
+  #   unless: [score,text]
+  # }
 }
 
 explore: posts_answers {
@@ -136,50 +152,26 @@ explore: stackoverflow_posts {
 
 
 
-# explore: posts_tag_wiki {
-#   join: posts_tag_owner_user_id {
-#     from: posts_tag_wiki_excerpt
-#     type: left_outer
-#     relationship: one_to_many
-#     sql_on: ${posts_tag_wiki.owner_user_id} = ${posts_tag_owner_user_id.owner_user_id};;
-#   }
+explore: posts_tag_wiki {
+  join: posts_tag_wiki_excerpt_owner_id {
+    from:posts_tag_wiki_excerpt
+    type: left_outer
+    relationship: one_to_many
+    sql_on:  ${posts_tag_wiki.owner_user_id} = ${posts_tag_wiki_excerpt_owner_id.owner_user_id};;
+    fields: [posts_tag_wiki_excerpt_owner_id.title]
+  }
 
-#   join: posts_tag_accepted_answer_id {
-#     from:posts_tag_wiki_excerpt
-#     type: left_outer
-#     relationship: one_to_many
-#     sql_on: ${posts_tag_wiki.accepted_answer_id} = ${posts_tag_accepted_answer_id.accepted_answer_id};;
-#   }
-
-  # join: posts_wiki_placeholder {
-  #   type: left_outer
-  #   relationship: one_to_many
-  #   sql_on: ${posts_wiki_placeholder.owner_user_id} = ${posts_tag_wiki_excerpt.owner_user_id};;
-  # }
-  # label: "StackOverFlow Post Tag WIKI"
-#}
+  join: posts_tag_wiki_excerpt_answer_id {
+    from: posts_tag_wiki_excerpt
+    type: left_outer
+    relationship: one_to_many
+    sql_on:  ${posts_tag_wiki.accepted_answer_id} = ${posts_tag_wiki_excerpt_answer_id.accepted_answer_id};;
+    fields: [posts_tag_wiki_excerpt_answer_id.parent_id]
+  }
+  label: "posts_tag_wiki NEW"
+}
 
 
-
-
-
-
-
-
-# explore: posts_tag_wiki {
-#   join: posts_tag_wiki_excerpt {
-#     type: left_outer
-#     relationship: one_to_many
-#     sql_on: ${posts_tag_wiki.owner_user_id} = ${posts_tag_wiki_excerpt.owner_user_id};;
-#   }
-
-#   join: posts_wiki_placeholder {
-#     type: left_outer
-#     relationship: one_to_many
-#     sql_on: ${posts_wiki_placeholder.owner_user_id} = ${posts_tag_wiki_excerpt.owner_user_id};;
-#   }
-#   label: "StackOverFlow Post Tag WIKI"
-# }
 
 
 explore: posts_tag_wiki_excerpt {

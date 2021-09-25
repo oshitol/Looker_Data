@@ -3,6 +3,7 @@ view: sample {
     ;;
 
   dimension: product_id {
+    alias: [test_alias]
     type: string
     sql: ${TABLE}.product_id ;;
   }
@@ -14,6 +15,6 @@ view: sample {
 
   measure: count {
     type: count
-    drill_fields: []
+    drill_fields: [run_id]
   }
 }

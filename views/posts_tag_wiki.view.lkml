@@ -144,9 +144,11 @@ view: posts_tag_wiki {
     type: string
     sql: ${TABLE}.view_count ;;
   }
-
+  set: test1 {
+    fields: [id, owner_display_name, last_editor_display_name]
+  }
   measure: count {
     type: count
-    drill_fields: [id, owner_display_name, last_editor_display_name]
+    drill_fields: [test1*]
   }
 }

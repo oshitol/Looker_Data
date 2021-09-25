@@ -142,7 +142,7 @@ view: posts_questions {
     sql: ${TABLE}.tags ;;
   }
 
-  dimension: title {
+  dimension: question_title {
     type: string
     # alias:[title]
     sql: ${TABLE}.title ;;
@@ -155,7 +155,7 @@ view: posts_questions {
 
   measure: count {
     type: count
-    drill_fields: [id, owner_display_name, last_editor_display_name,title]
+    drill_fields: [id, owner_display_name, last_editor_display_name]
   }
 
   # measure: row_count {

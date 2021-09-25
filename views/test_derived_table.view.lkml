@@ -4,6 +4,7 @@
 
 view: test_derived_table {
   derived_table: {
+    datagroup_trigger: akash_test_datagroup
     # sql_trigger_value: SELECT EXTRACT(HOUR FROM CURRENT_TIMESTAMP());;
     # persist_for: "20 minutes"
     explore_source: service_requests_opensource {

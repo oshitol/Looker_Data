@@ -60,10 +60,14 @@ view: comments {
     type: number
     sql: ${TABLE}.user_id ;;
   }
+  set: s1 {
+    fields: [score,text,user_display_name]
+  }
 
   measure: count {
     type: count
-    drill_fields: [user_display_name]
+    drill_fields: [s1*]
+    # filters: [comments.post_id :">=10"]
   }
 
 }
