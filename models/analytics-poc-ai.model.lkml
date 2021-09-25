@@ -6,7 +6,6 @@ include: "/manifest.lkml"
 
 
 datagroup: akash_test_datagroup {
-  # sql_trigger: SELECT max(id) FROM `poc-analytics-ai.looker_learning.pdt_sql_trigger_check`;;
   max_cache_age: "5 minutes"
 }
 
