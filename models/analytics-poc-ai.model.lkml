@@ -6,7 +6,7 @@ include: "/manifest.lkml"
 
 
 datagroup: akash_test_datagroup {
-  max_cache_age: "5 minutes"
+  max_cache_age: "50 minutes"
 }
 
 datagroup: test_dg {
