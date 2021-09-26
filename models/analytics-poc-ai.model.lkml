@@ -32,7 +32,8 @@ datagroup: test_dg {
 #   }
 # }
 
-explore: connection_reg_r3 {
+explore: connection_reg {
+  from: connection_reg_r3
   # persist_with: analytics
   # # persist_for: "2 hour"
 }
@@ -49,27 +50,40 @@ explore: service_requests_opensource {
   }
 }
 # explore: posts_tag_wiki {}
-explore: sample{
+explore: comments{
+  join: sample {
+    type: left_outer
+    sql_on: ${sample.product_id}=${comments.text} ;;
+  }
+  # group_label: "group_label_test"
+  # access_filter: {
+  #   field: product_id
+  #   user_attribute: akash_test_attribute
+  # }
 }
 
 explore: games_post_wide_opensource {
-  persist_with: test_dg
-  label: "GAMES"
+  group_label: "group_label_test"
 }
 
 explore: bikeshare_stations_opensource {}
 
-explore: comments {
-  label: "StackOverFlow Comments"
-  # sql_always_where: ${score}>=1547;;
-  # always_filter: {
-  #   filters: [text: ""]
-  # }
-  # conditionally_filter: {
-  #   filters: [comments.score: ">=1547"]
-  #   unless: [score,text]
-  # }
-}
+# explore: comments {
+#   label: "StackOverFlow Comments"
+#   sql_always_where: ${text}="1547";;
+#   access_filter: {
+#     field: text
+#     user_attribute: akash_test_attribute
+
+#   }
+#   # always_filter: {
+#   #   filters: [text: ""]
+#   # }
+#   # conditionally_filter: {
+#   #   filters: [comments.score: ">=1547"]
+#   #   unless: [score,text]
+#   # }
+# }
 
 explore: posts_answers {
   label: "StackOverFlow Post Answers"
@@ -204,7 +218,7 @@ explore: posts_wiki_placeholder{
 }
 access_grant: can_view_body {
   user_attribute: akash_test_attribute
-  allowed_values: ["allowed"]
+  allowed_values: ["allowe"]
 }
 
 access_grant: can_view_body_attribute {
