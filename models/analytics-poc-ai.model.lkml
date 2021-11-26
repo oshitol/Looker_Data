@@ -54,6 +54,11 @@ explore: comments{
   join: sample {
     type: left_outer
     sql_on: ${sample.product_id}=${comments.text} ;;
+
+  }
+  access_filter: {
+    field: comments.user_display_name
+    user_attribute: stackoverflow_comments_user_display_name
   }
   # group_label: "group_label_test"
   # access_filter: {
