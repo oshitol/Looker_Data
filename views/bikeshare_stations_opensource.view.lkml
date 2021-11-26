@@ -17,7 +17,7 @@ view: bikeshare_stations_opensource {
     sql: ${TABLE}.longitude ;;
   }
 
-  dimension: name {
+  dimension: name1 {
     type: string
     sql: ${TABLE}.name ;;
   }

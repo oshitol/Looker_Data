@@ -2,11 +2,26 @@ view: service_requests_opensource {
   sql_table_name: `poc-analytics-ai.looker_learning.service_requests_opensource`
     ;;
 
+
+  # suggestions: no
+
   dimension: city {
     # type: yesno
     type: string
     sql: ${TABLE}.city ;;
-    # sql: ${TABLE}.city = "AUST" OR ${TABLE}.city = "ATX" ;;
+  }
+
+  filter: order_region {
+    default_value: "Northeast"
+  }
+
+  parameter: order_count {
+    type: string
+    allowed_value: {
+      label: "test"
+      value: "<500"
+    }
+    full_suggestions: no
   }
 
   dimension_group: close {
@@ -25,6 +40,9 @@ view: service_requests_opensource {
 
   dimension: complaint_description {
     type: string
+    suggest_dimension: comments.text
+    suggest_explore: comments
+    # suggestable: no
     sql: ${TABLE}.complaint_description ;;
   }
 
@@ -58,11 +76,17 @@ view: service_requests_opensource {
   }
 
   dimension: incident_address {
+    group_label: "Incident"
+    group_item_label: "Address"
+    suggestable: no
+
     type: string
     sql: ${TABLE}.incident_address ;;
   }
 
   dimension: incident_zip {
+    group_label: "Incident"
+    group_item_label: "ZIP"
     type: number
     sql: ${TABLE}.incident_zip ;;
   }
@@ -150,6 +174,18 @@ view: service_requests_opensource {
     sql: ${TABLE}.street_name ;;
   }
 
+
+  dimension: case_check {
+    case: {
+      when: {
+        sql: ${street_name}="Akash" ;;
+        label: "Label of Condition"
+      }
+      # possibly more when statements
+      else: "Label If No Condition Met"
+    }
+  }
+
   dimension: street_number {
     type: string
     sql: ${TABLE}.street_number ;;
@@ -167,21 +203,42 @@ view: service_requests_opensource {
     sql_end: ${close_date::date} ;;
   }
 
+
+
+
+  measure: lst {
+    type: list
+    list_field: street_name
+  }
+
   measure: count {
     type: count
-    # sql: ${TABLE}.incident_zip ;;
     drill_fields: [street_name]
   }
+
   measure: average_zip {
     type: average
-    sql: ${TABLE}.incident_zip ;;
+    sql: ${incident_zip} ;;
   }
 
+  measure: sum_longitutde {
+    type: sum
+    sql: ${longitude} ;;
+  }
 
-  # dimension: station_id {
-  #   type: number
-  #   sql: ${bikeshare_stations_opensource.unique_key} ;;
-  # }
+  measure: new_count {
+    type: average
+    sql: ${latitude}  ;;
+  }
 
+  measure: bad_measure {
+    type: number
+    sql: ${sum_longitutde}  + ${sum_cdc} ;;
 
+  }
+  measure: sum_cdc {
+    type: sum
+    sql: ${council_district_code} ;;
+    # filters: [order_count: "{ % order_count % }"]
+  }
 }

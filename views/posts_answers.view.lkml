@@ -37,10 +37,10 @@ view: posts_answers {
   }
 
   dimension: body {
-    type: string
-    # type: yesno
-    # sql: ${TABLE}.body = "California" OR ${TABLE}.body = "New York" ;;
-    sql: ${TABLE}.body ;;
+    #type: string
+    type: yesno
+    sql: ${TABLE}.body = "California" OR ${TABLE}.body = "New York" ;;
+    #sql: ${TABLE}.body ;;
   }
 
   dimension: comment_count {

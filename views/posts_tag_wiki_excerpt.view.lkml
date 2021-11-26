@@ -1,6 +1,7 @@
 view: posts_tag_wiki_excerpt {
   sql_table_name: `poc-analytics-ai.stackoverflow.posts_tag_wiki_excerpt`
     ;;
+
   drill_fields: [id]
 
   dimension: id {
@@ -113,6 +114,7 @@ view: posts_tag_wiki_excerpt {
   }
 
   dimension: parent_id {
+    view_label: "parent_id"
     type: string
     sql: ${TABLE}.parent_id ;;
   }
