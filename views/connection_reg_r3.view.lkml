@@ -4,6 +4,7 @@ view: connection_reg_r3 {
 
   dimension: created_at {
     type: number
+    alias: [created_att]
     sql: ${TABLE}.created_at ;;
   }
 
@@ -14,7 +15,7 @@ view: connection_reg_r3 {
 
   dimension: looker {
     type: string
-    sql: ${TABLE}.looker ;;
+    sql: ${created_at::string} ;;
   }
 
   dimension: reg_key {
@@ -24,6 +25,7 @@ view: connection_reg_r3 {
 
   measure: count {
     type: count
-    drill_fields: []
+    filters: [expires_at: "1"]
+    drill_fields: [expires_at]
   }
 }

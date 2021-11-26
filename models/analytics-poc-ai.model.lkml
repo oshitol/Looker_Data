@@ -4,7 +4,7 @@ connection: "analytics-poc-ai"
 include: "/views/**/*.view"
 include: "/manifest.lkml"
 
-
+# label: "Analytics Akash"
 datagroup: akash_test_datagroup {
   max_cache_age: "5 minutes"
 }
@@ -32,27 +32,48 @@ datagroup: test_dg {
 #   }
 # }
 
-explore: connection_reg {
+explore: test_sum_distinct {
+  # group_label: "TEST GL"
+}
+
+
+
+explore: connection_reg_r3 {
+  # group_label: "AKASH TEST"
   from: connection_reg_r3
+  # group_label: "TEST GL"
   # persist_with: analytics
   # # persist_for: "2 hour"
 }
 
 #explore: test_derived_table {}
 
-#explore: service_requests_opensource {}
-
 explore: service_requests_opensource {
-  join: bikeshare_stations_opensource {
-    type: left_outer
-    sql_on: ${service_requests_opensource.longitude} = ${bikeshare_stations_opensource.longitude};;
-    fields: [bikeshare_stations_opensource.latitude]
-  }
+  # group_label: "AKASH TEST"
+
+}
+
+# explore: service_requests_opensource {
+#   join: bikeshare_stations_opensource {
+#     type: left_outer
+#     sql_on: ${service_requests_opensource.longitude} = ${bikeshare_stations_opensource.longitude};;
+#     fields: [bikeshare_stations_opensource.latitude]
+#   }
+# }
+
+explore: looker_yesno {
+  #group_label: "AKASH TEST"
 }
 # explore: posts_tag_wiki {}
-explore: comments{
-  join: sample {
+explore:sample{
+  access_filter: {
+    field: comments.user_display_name
+    user_attribute: stackoverflow_comments_user_display_name
+  }
+  join: comments {
     type: left_outer
+    required_access_grants: [can_see_data]
+    relationship: many_to_one
     sql_on: ${sample.product_id}=${comments.text} ;;
 
   }
@@ -60,11 +81,19 @@ explore: comments{
     field: comments.user_display_name
     user_attribute: stackoverflow_comments_user_display_name
   }
-  # group_label: "group_label_test"
-  # access_filter: {
-  #   field: product_id
-  #   user_attribute: akash_test_attribute
+
+
+  # conditionally_filter: {
+  #   filters: [comments.display_name: ""]
+  #   unless: [sample.product_id]
   # }
+  # always_filter: {
+  #   filters: [comments.display_name: ""]
+  # }
+}
+access_grant: can_see_data {
+  user_attribute: stackoverflow_comments_user_display_name
+  allowed_values: ["user11597028"]
 }
 
 explore: games_post_wide_opensource {
@@ -120,10 +149,10 @@ explore: stackoverflow_posts {
 
   }
 
-  # conditionally_filter: {
-  #   filters: [id: "1"]
-  #   unless: [posts_questions.accepted_answer_id,body,comment_count,parent_id,id]
-  # }
+  conditionally_filter: {
+    filters: [id: "1"]
+    unless: [posts_questions.accepted_answer_id,body,comment_count,parent_id,id]
+  }
 
 
 

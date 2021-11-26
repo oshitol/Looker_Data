@@ -4,9 +4,13 @@ view: comments {
   drill_fields: [id]
 
   dimension: id {
-    # primary_key: yes
+    primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+  }
+
+  filter: display_name {
+    default_value: "Akash"
   }
 
   parameter: metric_selection {
@@ -25,16 +29,23 @@ view: comments {
   dimension_group: creation {
     type: time
     timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
+      raw
+      # time,
+      # date,
+      # week,
+      # month,
+      # quarter,
+      # year
     ]
     sql: ${TABLE}.creation_date ;;
   }
+
+  # dimension_group: time_diff {
+  #   type: duration
+  #   sql_start:  ${creation_date} ;;
+  #   sql_end: ${creation_date} ;;
+  #   intervals: [day]
+  # }
 
   dimension: post_id {
     type: number
@@ -44,6 +55,12 @@ view: comments {
   dimension: score {
     type: number
     sql: ${TABLE}.score ;;
+  }
+  dimension: bin_score {
+    type: tier
+    bins: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+    style: classic
+    sql: ${score} ;;
   }
 
   dimension: text {

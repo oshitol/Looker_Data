@@ -52,6 +52,11 @@ view: posts_wiki_placeholder {
     sql: ${TABLE}.creation_date ;;
   }
 
+
+dimension_group: raw_tp {
+  type: time
+  sql: ${creation_raw} ;;
+}
   dimension: favorite_count {
     type: string
     sql: ${TABLE}.favorite_count ;;

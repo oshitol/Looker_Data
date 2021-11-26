@@ -759,6 +759,22 @@ view: games_post_wide_opensource {
     drill_fields: [detail*]
   }
 
+  measure: att_num {
+    type: number
+    sql: ${count} ;;
+  }
+
+  # measure: att_avg {
+  #   type: average
+  #   sql: ${att_num} ;;
+  # }
+
+  # measure: count1 {
+  #   type: sum
+  #   sql: ${count} ;;
+  # }
+
+
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
