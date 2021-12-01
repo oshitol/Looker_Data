@@ -3,7 +3,6 @@ connection: "analytics-poc-ai"
 include: "/views/*.view.lkml"
 
 explore: posts_answers {
-  label: "PSTEST"
 }
 # include all views in the views/ folder in this project
 # include: "/**/*.view.lkml"                 # include all views in this project
