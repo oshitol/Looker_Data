@@ -15,34 +15,9 @@ datagroup: test_dg {
   max_cache_age: "5 minutes"
 }
 
-# datagroup: analytics {
-#   # sql_trigger: SELECT MAX(id) FROM etl_log;;
-#   max_cache_age: "1 hour"
-# }
-
-# test: order_id_is_unique {
-#   explore_source: posts_answers {
-#     column: id {
-#     }
-#     column: count {}
-#     sorts: [posts_answers.count: desc]
-#     # limit: 1
-#   }
-#   assert: order_id_is_unique {
-#     # expression: NOT is_null(${posts_answers.id}) ;;
-#     expression: ${posts_answers.count} = 1 ;;
-#   }
-# }
-
-explore: test_sum_distinct {
-  # group_label: "TEST GL"
-}
 
 explore: primary_key_overflow {
-  sql_always_where: service_requests_opensource.city="City" ;;
-  # fields: [-primary_key_overflow.name]
   from: service_requests_opensource
-  # view_name: test_sum_distinct
 }
 
 
