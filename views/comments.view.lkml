@@ -9,6 +9,7 @@ view: comments {
     sql: ${TABLE}.id ;;
   }
 
+
   filter: display_name {
     default_value: "Akash"
   }
@@ -29,22 +30,42 @@ view: comments {
   dimension_group: creation {
     type: time
     timeframes: [
-      raw
-      # time,
-      # date,
-      # week,
-      # month,
-      # quarter,
-      # year
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
     ]
     sql: ${TABLE}.creation_date ;;
   }
 
-  # dimension_group: time_diff {
-  #   type: duration
-  #   sql_start:  ${creation_date} ;;
-  #   sql_end: ${creation_date} ;;
-  #   intervals: [day]
+  # dimension: dgt {
+  #   type: number
+  #   sql:${creation} ;;
+  # }
+
+  dimension: creation_string {
+    type: string
+    sql: ${creation_raw} ;;
+  }
+
+
+
+
+  # measure: bad_measure {
+  #   type: number
+  #   sql: ${post_id} + ${count} ;;
+  # }
+
+  # measure: count_post_id {
+  #   type: sum
+  #   sql: ${post_id} ;;
+  # }
+
+  # measure: good_measure {
+  #   type: number
+  #   sql: ${count_post_id} + ${count} ;;
   # }
 
   dimension: post_id {
@@ -56,9 +77,10 @@ view: comments {
     type: number
     sql: ${TABLE}.score ;;
   }
+
   dimension: bin_score {
     type: tier
-    bins: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90]
+    tiers: [0,30,60]
     style: classic
     sql: ${score} ;;
   }
@@ -66,6 +88,10 @@ view: comments {
   dimension: text {
     type: string
     sql: ${TABLE}.text ;;
+    link: {
+      label: "LINK"
+      url: "https://mediaagility.looker.com/explore/analytics-poc-ai/test_sample"
+    }
   }
 
   dimension: user_display_name {
@@ -80,6 +106,32 @@ view: comments {
   set: s1 {
     fields: [score,text,user_display_name]
   }
+
+  # measure: convert_count {
+  #   type: number
+  #   sql: ${count} ;;
+  # }
+
+  # measure: akash {
+  #   type: number
+  #   sql: ${count_post_id} + ${count} ;;
+  # }
+
+  # measure: avg {
+  #   type: sum
+  #   sql: ${count} ;;
+  # }
+
+  measure: sum_id {
+    type: number
+    sql: SUM(${id}) ;;
+  }
+
+  # measure: count_sum_id {
+  #   type: sum
+  #   sql: ${sum_id} ;;
+  # }
+
 
   measure: count {
     type: count
