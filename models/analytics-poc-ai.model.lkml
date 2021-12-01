@@ -14,7 +14,7 @@ include: "/manifest.lkml"
 
 # label: "Analytics Akash"
 datagroup: akash_test_datagroup {
-  max_cache_age: "1000 minutes"
+  max_cache_age: "10001 minutes"
 }
 
 datagroup: test_dg {
