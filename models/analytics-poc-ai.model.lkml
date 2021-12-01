@@ -20,6 +20,7 @@ explore: primary_key_overflow {
   from: service_requests_opensource
 }
 
+explore: looker_yes {}
 
 
 explore: connection_reg_r3 {
@@ -45,35 +46,16 @@ explore: service_requests_opensource {
 #   }
 # }
 
-explore: looker_yesno {
-  #group_label: "AKASH TEST"
-}
 # explore: posts_tag_wiki {}
 explore:test_sample {
-  sql_always_where: ${comments.id} = 1 ;;
   from: sample
+
   join: comments {
     type: left_outer
-   # required_access_grants: [can_see_data]
+    fields: [comments.post_id]
     relationship: many_to_one
     sql_on: ${test_sample.product_id}=${comments.text} ;;
-
   }
-  # access_filter: {
-  #   field: comments.user_display_name
-  #   user_attribute: stackoverflow_comments_user_display_name
-  # }
-  #sql_always_where: {{ _user_attributes["stackoverflow_comments_user_display_name"] }} = 'yes' ;;
-
-
-  # conditionally_filter: {
-  #   filters: [comments.display_name: ""]
-  #   unless: [sample.product_id]
-  # }
-  # always_filter: {
-  #   filters: [comments.display_name: ""]
-  # }
-  fields: [ALL_FIELDS*, -test_sample.product_id]
 
 }
 access_grant: can_see_data {
