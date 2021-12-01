@@ -18,9 +18,14 @@ view: test_sum_distinct {
     type: number
     sql: ${TABLE}.shipping_amount ;;
   }
+  # measure: get_avg {
+  #   type: sum
+  #   sql: ${count} ;;
+  # }
 
   measure: count {
     type: count
+    sql: ${id}  ;;
     drill_fields: [id]
   }
 
