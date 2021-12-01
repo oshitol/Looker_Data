@@ -5,9 +5,17 @@ view: sample {
   dimension: product_id {
     alias: [test_alias]
     type: string
-    # primary_key: yes
+    primary_key: yes
     sql: ${TABLE}.product_id ;;
   }
+
+
+  # measure: measure {
+  #   type: yesno
+  #   sql: ${product_id} ;;
+  #   filters: [run_id: "101"]
+
+  # }
 
   dimension: run_id {
     type: string
@@ -17,6 +25,7 @@ view: sample {
 
   measure: count {
     type: count
+    sql: ${product_id} ;;
     drill_fields: [run_id]
   }
 

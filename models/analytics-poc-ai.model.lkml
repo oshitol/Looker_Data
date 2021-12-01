@@ -6,42 +6,18 @@ include: "/manifest.lkml"
 
 
 
-
-
-
-
-
-
 # label: "Analytics Akash"
 datagroup: akash_test_datagroup {
-  max_cache_age: "100011 minutes"
+  max_cache_age: "100 minutes"
 }
 
 datagroup: test_dg {
   max_cache_age: "15 minutes"
 }
 
-# datagroup: analytics {
-#   # sql_trigger: SELECT MAX(id) FROM etl_log;;
-#   max_cache_age: "1 hour"
-# }
 
-# test: order_id_is_unique {
-#   explore_source: posts_answers {
-#     column: id {
-#     }
-#     column: count {}
-#     sorts: [posts_answers.count: desc]
-#     # limit: 1
-#   }
-#   assert: order_id_is_unique {
-#     # expression: NOT is_null(${posts_answers.id}) ;;
-#     expression: ${posts_answers.count} = 1 ;;
-#   }
-# }
-
-explore: test_sum_distinct {
-  # group_label: "TEST GL"
+explore: primary_key_overflow {
+  from: service_requests_opensource
 }
 
 
@@ -73,22 +49,21 @@ explore: looker_yesno {
   #group_label: "AKASH TEST"
 }
 # explore: posts_tag_wiki {}
-explore:sample{
-  access_filter: {
-    field: comments.user_display_name
-    user_attribute: stackoverflow_comments_user_display_name
-  }
+explore:test_sample {
+  sql_always_where: ${comments.id} = 1 ;;
+  from: sample
   join: comments {
     type: left_outer
-    required_access_grants: [can_see_data]
+   # required_access_grants: [can_see_data]
     relationship: many_to_one
-    sql_on: ${sample.product_id}=${comments.text} ;;
+    sql_on: ${test_sample.product_id}=${comments.text} ;;
 
   }
-  access_filter: {
-    field: comments.user_display_name
-    user_attribute: stackoverflow_comments_user_display_name
-  }
+  # access_filter: {
+  #   field: comments.user_display_name
+  #   user_attribute: stackoverflow_comments_user_display_name
+  # }
+  #sql_always_where: {{ _user_attributes["stackoverflow_comments_user_display_name"] }} = 'yes' ;;
 
 
   # conditionally_filter: {
@@ -98,6 +73,8 @@ explore:sample{
   # always_filter: {
   #   filters: [comments.display_name: ""]
   # }
+  fields: [ALL_FIELDS*, -test_sample.product_id]
+
 }
 access_grant: can_see_data {
   user_attribute: stackoverflow_comments_user_display_name

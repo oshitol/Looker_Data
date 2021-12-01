@@ -213,6 +213,7 @@ view: service_requests_opensource {
 
   measure: count {
     type: count
+    sql: ${council_district_code} ;;
     drill_fields: [street_name]
   }
 
