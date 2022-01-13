@@ -22,7 +22,6 @@ explore: primary_key_overflow {
 
 explore: looker_yes {}
 
-
 explore: connection_reg_r3 {
   # group_label: "AKASH TEST"
   from: connection_reg_r3
