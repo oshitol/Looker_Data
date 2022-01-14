@@ -2,11 +2,24 @@ view: comments {
   sql_table_name: `poc-analytics-ai.stackoverflow.comments`
     ;;
   drill_fields: [id]
+  set: my_set {
+    fields: [total_sales_price]
+  }
 
   dimension: id {
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
+  }
+
+  dimension: new_id {
+    type: yesno
+    sql: ${id} ;;
+  }
+
+  measure: total_sales_price {
+    type: sum
+    sql: ${new_id} ;;
   }
 
 
@@ -79,10 +92,8 @@ view: comments {
   }
 
   dimension: bin_score {
-    type: tier
-    tiers: [0,30,60]
-    style: classic
-    sql: ${score} ;;
+    type: tier tiers: [0,30,60]
+    style: classic sql: ${score} ;;
   }
 
   dimension: text {

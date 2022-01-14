@@ -7,6 +7,11 @@ view: bikeshare_stations_opensource {
     sql: ${TABLE}.latitude ;;
   }
 
+  dimension: get_first_day_of_month {
+    type: date
+    sql: CURRENT_TIMESTAMP() ;;
+  }
+
   dimension: location {
     type: string
     sql: ${TABLE}.location ;;

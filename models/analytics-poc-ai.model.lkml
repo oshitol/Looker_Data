@@ -5,22 +5,36 @@ include: "/views/**/*.view"
 include: "/manifest.lkml"
 
 
-
+persist_with: akash_test_datagroup1
 # label: "Analytics Akash"
-datagroup: akash_test_datagroup {
-  max_cache_age: "100 minutes"
+datagroup: akash_test_datagroup1 {
+  max_cache_age: "24 hours"
 }
 
-datagroup: test_dg {
-  max_cache_age: "15 minutes"
+datagroup: akash_test_datagroup2 {
+  max_cache_age: "1 hour"
 }
 
 
 explore: primary_key_overflow {
   from: service_requests_opensource
+  persist_with: akash_test_datagroup2
+  group_label: "TEST LABEL TODAY"
 }
 
-explore: looker_yes {}
+explore: looker_yes {
+  group_label: "TEST LABEL TODAY"
+}
+explore: sql_runner_query {}
+explore: test_derived {}
+explore: groupby {
+  # always_filter: {
+  #   filters: [groupby.count: "<100",groupby.count: ""]
+  # }
+  persist_for: "10 minutes"
+}
+
+explore: test_sum_distinct {}
 
 
 explore: connection_reg_r3 {
@@ -34,8 +48,6 @@ explore: connection_reg_r3 {
 #explore: test_derived_table {}
 
 explore: service_requests_opensource {
-  # group_label: "AKASH TEST"
-
 }
 
 # explore: service_requests_opensource {
@@ -49,10 +61,10 @@ explore: service_requests_opensource {
 # explore: posts_tag_wiki {}
 explore:test_sample {
   from: sample
+  # fields: [comments.post_id,test_sample.product_id]
 
   join: comments {
     type: left_outer
-    fields: [comments.post_id]
     relationship: many_to_one
     sql_on: ${test_sample.product_id}=${comments.text} ;;
   }
@@ -86,10 +98,10 @@ explore: bikeshare_stations_opensource {}
 #   # }
 # }
 
-explore: posts_answers {
-  label: "StackOverFlow Post Answers"
-  persist_for: "10 minutes"
-}
+# explore: posts_answers {
+#   label: "StackOverFlow Post Answers"
+#   persist_for: "10 minutes"
+# }
 
 explore: posts_questions {
   label: "StackOverFlow Post Questions"

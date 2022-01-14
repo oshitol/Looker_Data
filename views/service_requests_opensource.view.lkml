@@ -59,6 +59,8 @@ view: service_requests_opensource {
   dimension: county {
     type: string
     sql: ${TABLE}.county ;;
+    # suggest_explore: post_answers
+    # suggest_dimension: post_answers.favorite_count
   }
 
   dimension_group: created {

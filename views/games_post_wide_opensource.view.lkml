@@ -173,8 +173,119 @@ view: games_post_wide_opensource {
       quarter,
       year
     ]
+    datatype: date
     sql: ${TABLE}.createdAt ;;
   }
+
+  filter: report_date_filter {
+    type: date
+  }
+
+  dimension_group: new_date {
+    type: time
+    timeframes: [date]
+    sql:  {% date_start report_date_filter %} ;;
+  }
+
+
+
+  parameter: get_month_param {
+    type: number
+    allowed_value: {
+      label: "Jan"
+      value: "01"
+    }
+    allowed_value: {
+      label: "Feb"
+      value: "02"
+    }
+    allowed_value: {
+      label: "March"
+      value: "03"
+    }
+  }
+
+  parameter: get_year_param {
+    type: number
+    allowed_value: {
+      label: "2021"
+      value: "2021"
+    }
+    allowed_value: {
+      label: "2022"
+      value: "2022"
+    }
+    allowed_value: {
+      label: "2023"
+      value: "2023"
+    }
+  }
+
+
+  dimension: sense_year_param {
+    type: string
+    sql: {% parameter get_year_param %} ;;
+  }
+
+  dimension: get_first_day_of_selected_year_month{
+    sql: CONCAT(${sense_year_param},"-",${sense_month_param},"-01")  ;;
+  }
+
+
+
+  dimension: sense_month_param {
+    type: string
+    sql: {% parameter get_month_param %} ;;
+  }
+
+
+  dimension: sense_year_month {
+    case: {
+      when: {
+        sql: EXTRACT(MONTH FROM ${created_date}) = 01 ;;
+        label: "January"
+      }
+      when: {
+        sql: EXTRACT(MONTH FROM ${created_date}) = 02 ;;
+        label: "February"
+      }
+      when: {
+        sql: EXTRACT(MONTH FROM ${created_date}) = 03 ;;
+        label: "March"
+      }
+      # possibly more when statements
+      else: "Label If No Condition Met"
+    }
+  }
+
+
+
+  dimension: get_month {
+    case: {
+      when: {
+        sql: EXTRACT(MONTH FROM ${created_date}) = 01 ;;
+        label: "January"
+      }
+      when: {
+        sql: EXTRACT(MONTH FROM ${created_date}) = 02 ;;
+        label: "February"
+      }
+      when: {
+        sql: EXTRACT(MONTH FROM ${created_date}) = 03 ;;
+        label: "March"
+      }
+      # possibly more when statements
+      else: "Label If No Condition Met"
+    }
+  }
+
+
+  dimension: sense_get_month {
+    sql: ${get_month} ;;
+    type: string
+  }
+
+
 
   dimension: day_night {
     type: string
@@ -651,19 +762,7 @@ view: games_post_wide_opensource {
     sql: ${TABLE}.seasonType ;;
   }
 
-  dimension_group: start {
-    type: time
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}.startTime ;;
-  }
+
 
   dimension: starting_balls {
     type: number
@@ -690,6 +789,25 @@ view: games_post_wide_opensource {
     sql: ${TABLE}.strikes ;;
   }
 
+  dimension_group: start {
+    type: time
+    timeframes: [
+      raw,
+      time,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    sql: ${TABLE}.startTime ;;
+  }
+
+  dimension: start_month1 {
+    type: number
+    sql: ${start_month} ;;
+  }
+
   dimension_group: updated {
     type: time
     timeframes: [
@@ -702,6 +820,17 @@ view: games_post_wide_opensource {
       year
     ]
     sql: ${TABLE}.updatedAt ;;
+  }
+  dimension: update_month1 {
+    type: number
+    sql: ${updated_month} ;;
+  }
+  dimension_group: diff {
+    type: duration
+    sql_start: ${start_month} ;;
+    sql_end: ${updated_month} ;;
+    intervals: [month,year]
+
   }
 
   dimension: venue_capacity {
