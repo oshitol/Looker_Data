@@ -20,7 +20,9 @@ explore: primary_key_overflow {
   from: service_requests_opensource
 }
 
-explore: looker_yes {}
+explore: looker_yes {
+
+}
 
 explore: connection_reg_r3 {
   # group_label: "AKASH TEST"
