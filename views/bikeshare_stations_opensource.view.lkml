@@ -5,6 +5,7 @@ view: bikeshare_stations_opensource {
   dimension: latitude {
     type: number
     sql: ${TABLE}.latitude ;;
+
   }
 
   dimension: get_first_day_of_month {
