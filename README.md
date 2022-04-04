@@ -2,11 +2,11 @@
 
 ## Prerequisites
 
-- Service Account for Cloud Run 
-        - Below roles required for the Cloud Run Service Account<br>
-            - storage.buckets.get
-            - storage.objects.create
-            - storage.objects.delete
+- Service Account for Cloud Run: <br>
+         Below roles required for the Cloud Run Service Account<br>
+            - storage.buckets.get<br>
+            - storage.objects.create<br>
+            - storage.objects.delete<br>
 
 - GCS Bucket to stage data
   
