@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - Service Account for Cloud Run 
-        - Below roles required for the Cloud Run Service Account
+        - Below roles required for the Cloud Run Service Account<br>
             - storage.buckets.get
             - storage.objects.create
             - storage.objects.delete
