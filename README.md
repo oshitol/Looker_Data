@@ -1,4 +1,4 @@
-# Dataflow pipeline to transfer data from gis webservice to GCS
+# Cloud run code to transfer data from gis webservice to GCS
 
 ## Prerequisites
 
@@ -7,6 +7,7 @@
             - storage.buckets.get<br>
             - storage.objects.create<br>
             - storage.objects.delete<br>
+            - iam.serviceaccounts.actAs<br>
 
 - GCS Bucket to stage data
   
